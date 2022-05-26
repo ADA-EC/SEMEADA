@@ -20,6 +20,7 @@ MCUFRIEND_kbv tft;
 #define OLIVE       0x7BE0
 #define LIGHTGREY   0xC618
 #define DARKGREY    0x7BEF
+int emocao=0;
 
 void setup() {
   Serial.begin(9600);
@@ -34,14 +35,13 @@ void setup() {
 
   tft.fillCircle(120, 160, 100, WHITE);
   tft.fillCircle(120, 160, 30, NAVY);
-
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-    int emocao=0;
-
+    while(!Serial.available());
     emocao = Serial.read();
+    Serial.println(emocao);
 
 
 	switch(emocao){
