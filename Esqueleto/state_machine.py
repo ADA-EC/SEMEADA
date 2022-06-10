@@ -1,6 +1,7 @@
 from comandos import comando
-import random
 import pandas as pd
+import commSerial
+import random
 
 def prime(fn):
 	def wrapper(*args, **kwargs):
@@ -43,6 +44,9 @@ class MaqEstados:
 		self.arquivo_sem_transicao = pd.read_csv("PIADA_Sem_transição.tsv", sep="	")
 		self.arquivo_toc_toc = pd.read_csv("PIADA_Toc_toc.tsv", sep="	")
 
+		#Create serial communication
+		self.arduino = commSerial.commSerial()
+
 	def send(self, msg):
 		"""The function sends the current input to the current state
 		It captures the StopIteration exception and marks the Stopped flag.
@@ -50,8 +54,11 @@ class MaqEstados:
 		try:
 			if(msg.isnumeric()):
 				self.current_state[0].send(int(msg))
+				self.arduino.sendMsg(msg)
 			else:
 				self.current_state[0].send(msg)
+
+			#COLOCAR AQUI FUNC QUE DECIFRA ESTADO ANTERIOR E ATUAL PARA CRIAR MSG
 		except StopIteration:
 			print("Finalizou")
 			self.Stopped = True
