@@ -54,7 +54,7 @@ class MaqEstados:
 		try:
 			if(msg.isnumeric()):
 				self.current_state[0].send(int(msg))
-				self.arduino.sendMsg(msg)
+				self.arduino.sendMsg(chr(int(msg)))
 			else:
 				self.current_state[0].send(msg)
 

@@ -6,7 +6,7 @@ class commSerial:
 	def __init__(self):
 		while True: #Loop para a conexão com o Arduino
 			try:  #Tenta se conectar, se conseguir, o loop se encerra
-				self.arduino = serial.Serial('COM7', 9600, dsrdtr = None)
+				self.arduino = serial.Serial('COM3', 9600, dsrdtr = None)
 				print('Arduino conectado')
 				break
 			except:

@@ -2,7 +2,6 @@ from comandos import comando
 import processamento_voz
 import state_machine
 import sintese_voz
-import rostos
 import PLN
 #Bibliotecas de PLN
 from spacy.lang.pt.stop_words import STOP_WORDS
