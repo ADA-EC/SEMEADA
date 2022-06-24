@@ -49,7 +49,7 @@ class MaqEstados:
 
 	def send(self, msg):
 		"""The function sends the current input to the current state
-		It captures the StopIteration exception and marks the Stopped flag.
+			It captures the StopIteration exception and marks the Stopped flag.
 		"""
 		try:
 			if(msg.isnumeric()):
@@ -59,10 +59,13 @@ class MaqEstados:
 				self.current_state[0].send(msg)
 
 			#COLOCAR AQUI FUNC QUE DECIFRA ESTADO ANTERIOR E ATUAL PARA CRIAR MSG
+			
+			
 		except StopIteration:
 			print("Finalizou")
 			self.Stopped = True
-		
+
+
 	def does_match(self):
 		"""The function at any point in time returns if till the current input
 		the string matches the given regular expression.
