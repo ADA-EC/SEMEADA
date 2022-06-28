@@ -1,26 +1,28 @@
-	Braço Abaixado = 0
-	cabeça reta = 0, 0
-	tronco reto = 0
-	
-	olhos = -1 ==> não mudar
+Braço Abaixado = 0
+cabeça reta = 0, 0
+tronco reto = 0
 
-    neutro ==> braços abaixados, cabeça e tronco retos e olhos neutros
-    bravo ==> braços abaixados, cabeça para esquerda, tronco reto e olhos bravos
-    triste ==> braços abaixados, cabeça para baixo, tronco reto e olhos tristes
-    feliz ==> braços abaixados, cabeças e troncos retos e olhos felizes
-    dormindo ==> braços abaixados, cabeça para baixo, tronco reto e olhos fechados
-    falar_nome ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    falar_projeto ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    soletrando ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    falar_ADA ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    falar_SEMEAR ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    piada_simples ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    piada_pergunta_e_resposta ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    piada_toc_toc ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
-    piada ==> nada
+olhos = -1 ==> não mudar
+
+neutro ==> braços abaixados, cabeça e tronco retos e olhos neutros
+feliz ==> braços abaixados, cabeças e troncos retos e olhos felizes
+falar_nome ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+falar_projeto ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+soletrando ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+falar_ADA ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+falar_SEMEAR ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+piada_simples ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+piada_pergunta_e_resposta ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+piada_toc_toc ==> braços abaixados, cabeça e tronco retos e olhos iguais ao anterior, sair som
+piada ==> nada
 
 
-    tocar_musica ==> alguma dança, decidir depois, sair som
-    dançar ==> levantar braços alternadamente, tronco gira um pouco para os dois lados, cabeça para cima e para baixo, olhos fechados
-    levantar_bracos ==> levantar os braços, tronco e cabeça imóveis e olhos iguais ao anterior
-    girar ==> tronco: 180° -360° 180°, braços abaixados, pescoço reto, olhos felizes
+bravo ==> braços abaixados, cabeça para esquerda, tronco reto e olhos bravos
+triste ==> braços abaixados, cabeça para baixo, tronco reto e olhos tristes
+dormindo ==> braços abaixados, cabeça para baixo, tronco reto e olhos fechados
+levantar_bracos ==> levantar os braços, tronco e cabeça imóveis e olhos iguais ao anterior
+
+
+tocar_musica ==> alguma dança, decidir depois, sair som
+dançar ==> levantar braços alternadamente, tronco gira um pouco para os dois lados, cabeça para cima e para baixo, olhos fechados
+girar ==> tronco: 180° -360° 180°, braços abaixados, pescoço reto, olhos felizes

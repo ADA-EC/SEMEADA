@@ -27,7 +27,7 @@ class MaqEstados:
 		self.falar_SEMEAR = (self._create_falar_SEMEAR(),"Falar_sobre_SEMEAR")
 		self.piada_simples = (self._create_piada_simples(), "Piada sem transição")
 		self.piada_pergunta_e_resposta = (self._create_piada_pergunta_e_resposta(), "Piada pergunta e resposta")
-		self.piada_toc_toc = (self._create_piada_toc_toc(), "Piada sem toc toc")
+		self.piada_toc_toc = (self._create_piada_toc_toc(), "Piada toc toc")
 		self.piada = (self._create_piada(), "Piada")
 		self.tocar_musica = (self._create_tocar_musica(), "Tocar musica")
 		
@@ -54,7 +54,8 @@ class MaqEstados:
 		try:
 			if(msg.isnumeric()):
 				self.current_state[0].send(int(msg))
-				self.arduino.sendMsg(chr(int(msg)))
+				# self.arduino.sendMsg(chr(int(msg)))
+				self.arduino.mudancaEstado(self.current_state, self.previous_state)
 			else:
 				self.current_state[0].send(msg)
 
