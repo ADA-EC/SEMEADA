@@ -37,54 +37,64 @@ class commSerial:
 		'''Função que seleciona qual mensagem deve ser enviada para o arduino
 			Obs: Não conseguimos pensar em uma maneira menor de fazer isso :(
 		'''
+		print("Estado atual: ", currState)
 
 
 		if currState=="Bravo":
-			msg=createMsg(self.bravo)
+			msg=self.createMsg(self.bravo)
 		elif currState=="Neutro":
-			msg=createMsg(self.neutro)
+			msg=self.createMsg(self.neutro)
 		elif currState=="Triste":
-			msg=createMsg(self.triste)
+			msg=self.createMsg(self.triste)
 		elif currState=="Feliz":
-			msg=createMsg(self.feliz)
+			msg=self.createMsg(self.feliz)
 		elif currState=="Dormindo":
-			msg=createMsg(self.dormindo)
+			msg=self.createMsg(self.dormindo)
 		elif currState=="handsup":
-			msg=createMsg(self.levantar_bracos)
+			print("ENTROU!")
+			msg=self.createMsg(self.levantar_bracos)
 		elif currState=="Falar_nome":
-			msg=createMsg(self.falar_nome)
+			msg=self.createMsg(self.falar_nome)
 		elif currState=="Falar_projeto":
-			msg=createMsg(self.falar_projeto)
+			msg=self.createMsg(self.falar_projeto)
 		elif currState=="Soletrando":
-			msg=createMsg(self.soletrando)
+			msg=self.createMsg(self.soletrando)
 		elif currState=="Falar_sobre_ADA": 
-			msg=createMsg(self.falar_ADA)
+			msg=self.createMsg(self.falar_ADA)
 		elif currState=="Falar_sobre_SEMEAR":
-			msg=createMsg(self.falar_SEMEAR)
+			msg=self.createMsg(self.falar_SEMEAR)
 		elif currState=="Piada sem transição":
-			msg=createMsg(self.piada_simples)
+			msg=self.createMsg(self.piada_simples)
 		elif currState=="Piada pergunta e resposta":
-			msg=createMsg(self.piada_pergunta_e_resposta)
+			msg=self.createMsg(self.piada_pergunta_e_resposta)
 		elif currState=="Piada toc toc":
-			msg=createMsg(self.piada_toc_toc)
+			msg=self.createMsg(self.piada_toc_toc)
 		elif currState=="Piada":
-			msg=createMsg(self.piada)
+			msg=self.createMsg(self.piada)
 
+		self.sendMsg(msg)
 
-	def createMsg (lista):
+	def createMsg (self, lista):
 		msg=bytearray()
 
 		for pos in range(5):
-			msg.append(lista[pos].to_bytes(2, byteorder='big'))
-			msg.append((5).to_bytes(2, byteorder='big'))
+			msg.extend(lista[pos].to_bytes(2, byteorder='big'))
+			msg.extend((5).to_bytes(2, byteorder='big'))
 		
 		for pos in range(5, 7):
-			msg.append(lista[pos].to_bytes(2, byteorder='big'))
+			msg.extend(lista[pos].to_bytes(2, byteorder='big'))
 
-		msg.append((0).to_bytes(2, byteorder='big'))
+		msg.extend((1).to_bytes(2, byteorder='big'))
 
 		return msg
 
 
 	def sendMsg(self, msg):
-		self.arduino.write(msg.encode())
+		self.arduino.write(msg)
+		print("Mensagem lida:")
+		txt=self.arduino.read()
+		print(int.from_bytes(txt, 'big'))
+		print(int.from_bytes(txt, 'little'))
+
+
+		
