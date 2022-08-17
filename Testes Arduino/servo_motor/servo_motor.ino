@@ -9,32 +9,54 @@ int i, j, pos;
 
 void setup() {
   Serial.begin(9600);
-  myservo.attach(10);  // attaches the servo on pin 9 to the servo object
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
   memset(msg,0,13*sizeof(int16_t)); //set msg to 0
-  memset(msg,0,7*sizeof(int16_t)); //set msg to 0
+  memset(pos_at,0,7*sizeof(int16_t)); //set msg to 0
+
+  Serial.flush();
 }
 
 void loop() {
   //Código para comunicação com python
   while(!Serial.available());
-  for(i=0;i<13;i++){
+  for(i=0;i<2;i++){
     msg[i] = Serial.read();
-    Serial.println(msg[i]);
+    //Serial.readBytes(buffer, sizeof(int))
   }
+
 
   //Serial.readBytes((char*)msg, 13*sizeof(int16_t));
   //Serial.println(msg[0]);
 
-  myservo.write(msg[0]);
-
   //Cálculo para movimento do braço
-  /*for(i=0; i<5; i++){
-    incremento[i] = (msg[2*i]-pos_at[i])/200;
+  for(i=0; i<2; i++){
+    incremento[i] = (msg[i]-pos_at[i])/200;
+  }
+
+  for(i=0;i<200; i++){
+    myservo.write(pos_at[0]);
+    delay(5);
+    pos_at[0]=pos_at[0]+incremento[0];
+  }
+
+  incremento[1] = (msg[1]-pos_at[0])/200;
+  
+  for(i=0;i<200; i++){
+    myservo.write(pos_at[0]);
+    delay(5);
+    pos_at[0]=pos_at[0]+incremento[1];
   }
   
+  Serial.write(msg[0]);
+  Serial.write(msg[1]);
+  
 
-  for(i=0; i<msg[12];i++){    //roda a quantidade de vezes pedida pelo .py
-    for (pos = 0; pos <= 200; pos++) {  //Loop de 1s para realizar o movimento
+  /*  for(i=0; i<5; i++){
+        incremento[i] = (msg[2*i]-pos_at[i])/200;
+      }
+  
+   for(i=0; i<msg[12];i++){    //roda a quantidade de vezes pedida pelo .py
+    for (pos = 0; pos < 200; pos++) {  //Loop de 1s para realizar o movimento
       for(j=0; j<5; j++){
         pos_at[j]+=incremento[j];
       }
