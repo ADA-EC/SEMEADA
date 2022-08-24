@@ -2,8 +2,11 @@
 Para atualizar os dados e rodar o treinamento, é necessário seguir os seguintes passos:
 
 1- Modificar/atualizar a base de dados ("DataBaseFinal.csv") dentro da pasta "assets";
+
 2- Rodar o documento "convert.py" dentro da pasta scripts;
+
 3- Digitar o comando "python -m spacy project run convert", que converte o .json em .spacy;
+
 4- Digitar o comando "python -m spacy project run train", que roda o treinamento da máquina.
 
 ## Teste
