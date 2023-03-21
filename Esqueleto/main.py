@@ -28,8 +28,8 @@ def main():
 			sintese_voz.speak(texto)
 			numComando = PLN.pln(texto, nlp, stop_words, pln_tokenizer)
 			# robo.send(str(numComando))
-		# else:
-			# robo.send(msg)
+		else:
+			robo.send(msg)
 
 if (__name__ == '__main__'):
 	main()
