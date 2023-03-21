@@ -1,5 +1,5 @@
 class comando:
-	
+	# 1 - 7 - 15 - 11 - 15 - 12 - 15
 	ofensa = 0 #Ela fica triste se é ofendida
 	elogio = 1 #Ela fica feliz se é elogiada
 	silencio = 2 #Ela muda de estado se ninguém fala com ela

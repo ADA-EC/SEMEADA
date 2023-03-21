@@ -12,21 +12,21 @@ class commSerial:
 		self.triste = [0, 0, 0, 0, 20, olho.triste, olho.triste]
 		self.dormindo = [0, 0, 0, 0, 30, olho.dormindo, olho.dormindo]
 		self.neutro = [0, 0, 0, 0, 0, olho.neutro, olho.neutro]
-		self.feliz = [0, 0, 0, 0, 0, olho.feliz, olho.feliz]
+		self.feliz = [60, 30, 90, 180, 0, olho.feliz, olho.feliz]
 		self.falar_nome = [0, 0, 0, 0, 0, olho.noChange, olho.noChange]
 		self.falar_projeto = [0, 0, 0, 0, 0, olho.noChange, olho.noChange]
 		self.soletrando = [0, 0, 0, 0, 0, olho.noChange, olho.noChange]
-		self.falar_ADA = [0, 0, 0, 0, 0, olho.noChange, olho.noChange]
-		self.falar_SEMEAR = [0, 0, 0, 0, 0, olho.noChange, olho.noChange]
+		self.falar_ADA = [0, 180, 180, 90, 90, olho.noChange, olho.noChange]
+		self.falar_SEMEAR = [30, 60, 90, 90, 180, olho.noChange, olho.noChange]
 		self.piada_simples = [0, 0, 0, 0, 0, olho.feliz, olho.feliz]
 		self.piada_pergunta_e_resposta = [0, 0, 0, 0, 0, olho.feliz, olho.feliz]
 		self.piada_toc_toc = [0, 0, 0, 0, 0, olho.feliz, olho.feliz]
 		self.piada = [0, 0, 0, 0, 0, olho.feliz, olho.feliz]
-		self.levantar_bracos = [180, 180, 0, 0, 0, olho.noChange, olho.noChange]
+		self.levantar_bracos = [180, 45, 45, 180, 90, olho.noChange, olho.noChange]
 
 		while True: #Loop para a conexão com o Arduino
 			try:  #Tenta se conectar, se conseguir, o loop se encerra
-				self.arduino = serial.Serial('COM3', 9600, dsrdtr = None)
+				self.arduino = serial.Serial('COM5', 9600, dsrdtr = None, timeout=4)
 				print('Arduino conectado')
 				break
 			except:
@@ -78,23 +78,28 @@ class commSerial:
 		msg=bytearray()
 
 		for pos in range(5):
-			msg.extend(lista[pos].to_bytes(2, byteorder='big'))
-			msg.extend((5).to_bytes(2, byteorder='big'))
+			msg.extend(lista[pos].to_bytes(2, byteorder='little'))
+			msg.extend((5).to_bytes(2, byteorder='little'))
 		
 		for pos in range(5, 7):
-			msg.extend(lista[pos].to_bytes(2, byteorder='big'))
+			msg.extend(lista[pos].to_bytes(2, byteorder='little'))
 
-		msg.extend((1).to_bytes(2, byteorder='big'))
+		msg.extend((1).to_bytes(2, byteorder='little'))
 
 		return msg
 
 
 	def sendMsg(self, msg):
+		print(msg)
 		self.arduino.write(msg)
 		print("Mensagem lida:")
-		txt=self.arduino.read()
-		print(int.from_bytes(txt, 'big'))
-		print(int.from_bytes(txt, 'little'))
+		txt=self.arduino.read(size=26)
+		if(txt != b''):
+			print(txt)
+			for i in range(5):
+				print(int.from_bytes(txt[2*(2*i):2*((2*i)+1)], 'little'), end=" - ")
+		else:
+			print("NONE")
 
 
 		

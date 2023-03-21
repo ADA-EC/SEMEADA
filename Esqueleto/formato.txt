@@ -1,7 +1,7 @@
 Cabeçalho:
 Braço_Esquerdo | Braco_Direito | Tronco    | Pescoço_Horizontal | Pescoço_Vertical | Olho_Esquerdo    | Olho_Direito     | num de loops
 ang veloc      | ang veloc     | ang veloc | ang veloc          | ang veloc        | num_img_carregar | num_img_carregar |  num_loops
- 0    1           2    3          4    5      6    7               8    9                    10                11				0
+ 0    1           2    3          4    5      6    7               8    9                    10                11				12
 
 Exemplo:
 a) Braços parados, tronco se movendo, pescoço parado e olho feliz, repetindo uma vez e :

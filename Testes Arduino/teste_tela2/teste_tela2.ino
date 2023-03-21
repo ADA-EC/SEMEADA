@@ -3,11 +3,11 @@
 
 
 #include <Adafruit_TFTLCD.h> // Hardware-specific library
-#include <TouchScreen.h>
-
 #include <Adafruit_GFX.h> // Hardware-specific library
+#include <TouchScreen.h>
 #include <MCUFRIEND_kbv.h>
 MCUFRIEND_kbv tft;
+
 
 
 #define YP A3 // Y+ is on Analog1 (use A3 para o 9341)

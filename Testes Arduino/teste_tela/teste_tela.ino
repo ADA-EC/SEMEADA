@@ -1,108 +1,91 @@
-/*
- TFT LCD - TFT Simple driving
- modified on 21 Feb 2019
- by Saeed Hosseini
- https://electropeak.com/learn/
-*/
-#include <Adafruit_GFX.h>
-#include <Adafruit_TFTLCD.h>
-#define LCD_CS A3
-#define LCD_CD A2
-#define LCD_WR A1
-#define LCD_RD A0
-#define LCD_RESET A4
-#define BLACK       0x0000
-#define BLUE        0x001F
-#define RED         0xF800
-#define GREEN       0x07E0
-#define CYAN        0x07FF
-#define MAGENTA     0xF81F
-#define YELLOW      0xFFE0
-#define WHITE       0xFFFF
-#define ORANGE      0xFD20
-#define GREENYELLOW 0xAFE5
-#define NAVY        0x000F
-#define DARKGREEN   0x03E0
-#define DARKCYAN    0x03EF
-#define MAROON      0x7800
-#define PURPLE      0x780F
-#define OLIVE       0x7BE0
-#define LIGHTGREY   0xC618
-#define DARKGREY    0x7BEF
-Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-void setup() {
- Serial.begin(9600);
- Serial.println(F("TFT LCD test"));
-#ifdef USE_ADAFRUIT_SHIELD_PINOUT
- Serial.println(F("Using Adafruit 2.4\" TFT Arduino Shield Pinout"));
-#else
- Serial.println(F("Using Adafruit 2.4\" TFT Breakout Board Pinout"));
-#endif
-// Serial.print("TFT size is ");
-// Serial.print(tft.width());
-// Serial.print("x");
-// Serial.println(tft.height());
- tft.reset();
- uint16_t identifier = tft.readID();
- //Serial.println(identifier);
+// CreaTechWeb : Displaying an image on a TFT screen with arduino
 
-int id=0032;
-identifier = (uint16_t)id;
-Serial.println("id0x0000:");
-Serial.println(identifier);
-identifier = 0x9325;
-Serial.println("idfixo: ");
-Serial.println(identifier);
- 
- if (identifier == 0x9325) {
-   Serial.println(F("Found ILI9325 LCD driver"));
- } else if (identifier == 0x9328) {
-   Serial.println(F("Found ILI9328 LCD driver"));
- } else if (identifier == 0x7575) {
-   Serial.println(F("Found HX8347G LCD driver"));
- } else if (identifier == 0x9341) {
-   Serial.println(F("Found ILI9341 LCD driver"));
- } else if (identifier == 0x8357) {
-   Serial.println(F("Found HX8357D LCD driver"));
- } else {
-   Serial.print(F("Unknown LCD driver chip: "));
-   Serial.println(identifier, HEX);
-   Serial.println(F("If using the Adafruit 2.4\" TFT Arduino shield, the line:"));
-   Serial.println(F("  #define USE_ADAFRUIT_SHIELD_PINOUT"));
-   Serial.println(F("should appear in the library header (Adafruit_TFT.h)."));
-   Serial.println(F("If using the breakout board, it should NOT be #defined!"));
-   Serial.println(F("Also if using the breakout, double-check that all wiring"));
-   Serial.println(F("matches the tutorial."));
-   return;
- }
- tft.begin(identifier);
- Serial.println(F("Benchmark                Time (microseconds)"));
- Serial.print(F("Screen fill              "));
- Serial.println(FillScreen());
- delay(500);
- tft.setTextColor(MAROON);
- tft.setCursor(70, 180);
- tft.setTextSize(1);
- tft.println(".\n°°°°°°°°°°°°|\\\n°°°°°°°°°°°°|_\\\n°°°°°°°°°°°°|__\\\n°°°°°°°°°°°°|___\\\n°°°°°°°°°°°°|____\\\n°°°°°°°°°°°°|_____\\°°°°°°\n°°°°°°°°°°°°|______\\°°°°°°\n°°°°°°______|_______________\n~~~~\\____________________/~~~~\n,.-~*´¨¯¨`*·~-.¸,.-~*´¨¯¨`*·~-\n.¸,.-~*´¨¯¨`*·~-.¸,.-~*´¨¯¨`*·~-");
- delay(200);
-// tft.fillScreen(PURPLE);
-// tft.setCursor(50, 170);
-// tft.setTextSize(2);
-// tft.println("Electropeak");
-// delay(200);
-// tft.fillScreen(PURPLE);
-// tft.setCursor(20, 160);
-// tft.setTextSize(3);
-// tft.println("Electropeak");
-// delay(500);
-// tft.fillScreen(PURPLE);
- for (int rotation = 0; rotation < 4; rotation++) { tft.setRotation(rotation); tft.setCursor(0, 0); tft.setTextSize(3); tft.println("Electropeak"); delay(700); } delay(500); Serial.print(F("Rectangles (filled) ")); Serial.println(testFilledRects(YELLOW, MAGENTA)); delay(500); } void loop() { } unsigned long FillScreen() { unsigned long start = micros(); tft.fillScreen(RED); delay(500); tft.fillScreen(GREEN); delay(500); tft.fillScreen(BLUE); delay(500); tft.fillScreen(WHITE); delay(500); tft.fillScreen(MAGENTA); delay(500); tft.fillScreen(PURPLE); delay(500); return micros() - start; } unsigned long testFilledRects(uint16_t color1, uint16_t color2) { unsigned long start, t = 0; int n, i, i2, cx = tft.width() / 2 - 1, cy = tft.height() / 2 - 1; tft.fillScreen(BLACK); n = min(tft.width(), tft.height()); for (i = n; i > 0; i -= 6) {
-   i2    = i / 2;
-   start = micros();
-   tft.fillRect(cx - i2, cy - i2, i, i, color1);
-   t    += micros() - start;
-   // Outlines are not included in timing results
-   tft.drawRect(cx - i2, cy - i2, i, i, color2);
- }
- return t;
+// https://createchweb.com/displaying-an-image-on-a-tft-screen-with-arduino/
+
+// include the necessary libraries
+#include <SPI.h>
+#include <SD.h>
+#include <TFT.h>  // Arduino LCD library
+
+// pin definition for the Uno
+#define sd_cs  4
+#define lcd_cs 10
+#define dc     9
+#define rst    8
+
+// pin definition for the Leonardo
+//#define sd_cs  8
+//#define lcd_cs 7
+//#define dc     0
+//#define rst    1
+
+TFT TFTscreen = TFT(lcd_cs, dc, rst);
+
+// this variable represents the image to be drawn on screen
+PImage logo;
+
+
+void setup() {
+  // initialize the GLCD and show a message
+  // asking the user to open the serial line
+  TFTscreen.begin();
+  TFTscreen.background(255, 255, 255);
+
+  TFTscreen.stroke(0, 0, 255);
+  TFTscreen.println();
+  TFTscreen.println(F("Arduino TFT Bitmap Example"));
+  TFTscreen.stroke(0, 0, 0);
+  TFTscreen.println(F("Open serial monitor"));
+  TFTscreen.println(F("to run the sketch"));
+
+  // initialize the serial port: it will be used to
+  // print some diagnostic info
+  Serial.begin(9600);
+  while (!Serial) {
+    // wait for serial port to connect. Needed for native USB port only
+  }
+
+  // clear the GLCD screen before starting
+  TFTscreen.background(255, 255, 255);
+
+  // try to access the SD card. If that fails (e.g.
+  // no card present), the setup process will stop.
+  Serial.print(F("Initializing SD card..."));
+  if (!SD.begin(sd_cs)) {
+    Serial.println(F("failed!"));
+    return;
+  }
+  Serial.println(F("OK!"));
+
+  // initialize and clear the GLCD screen
+  TFTscreen.begin();
+  TFTscreen.background(255, 255, 255);
+
+  // now that the SD card can be access, try to load the
+  // image file.
+  logo = TFTscreen.loadImage("aberto.bmp");
+  if (!logo.isValid()) {
+    Serial.println(F("error while loading arduino.bmp"));
+  }
+}
+
+void loop() {
+  // don't do anything if the image wasn't loaded correctly.
+  if (logo.isValid() == false) {
+    return;
+  }
+
+  Serial.println(F("drawing image"));
+
+  // get a random location where to draw the image.
+  // To avoid the image to be draw outside the screen,
+  // take into account the image size.
+  int x = random(TFTscreen.width() - logo.width());
+  int y = random(TFTscreen.height() - logo.height());
+
+  // draw the image to the screen
+  TFTscreen.image(logo, x, y);
+
+  // wait a little bit before drawing again
+  delay(1500);
 }
