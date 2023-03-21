@@ -45,26 +45,26 @@ class MaqEstados:
 		self.arquivo_toc_toc = pd.read_csv("PIADA_Toc_toc.tsv", sep="	")
 
 		#Create serial communication
-		self.arduino = commSerial.commSerial()
+		# self.arduino = commSerial.commSerial()
 
-	def send(self, msg):
-		"""The function sends the current input to the current state
-			It captures the StopIteration exception and marks the Stopped flag.
-		"""
-		try:
-			if(msg.isnumeric()):
-				self.current_state[0].send(int(msg))
-				# self.arduino.sendMsg(chr(int(msg)))
-				self.arduino.mudancaEstado(self.current_state[1], self.previous_state)
-			else:
-				self.current_state[0].send(msg)
+	# def send(self, msg):
+	# 	"""The function sends the current input to the current state
+	# 		It captures the StopIteration exception and marks the Stopped flag.
+	# 	"""
+	# 	try:
+	# 		if(msg.isnumeric()):
+	# 			self.current_state[0].send(int(msg))
+	# 			# self.arduino.sendMsg(chr(int(msg)))
+	# 			self.arduino.mudancaEstado(self.current_state[1], self.previous_state)
+	# 		else:
+	# 			self.current_state[0].send(msg)
 
-			#COLOCAR AQUI FUNC QUE DECIFRA ESTADO ANTERIOR E ATUAL PARA CRIAR MSG
+	# 		#COLOCAR AQUI FUNC QUE DECIFRA ESTADO ANTERIOR E ATUAL PARA CRIAR MSG
 			
 			
-		except StopIteration:
-			print("Finalizou")
-			self.Stopped = True
+	# 	except StopIteration:
+	# 		print("Finalizou")
+	# 		self.Stopped = True
 
 
 	def does_match(self):
@@ -129,7 +129,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				self.current_state[0].send(0)
+				# self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -176,7 +176,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				self.current_state[0].send(0)
+				# self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -218,7 +218,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				self.current_state[0].send(0)
+				# self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -264,7 +264,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				self.current_state[0].send(0)
+				# self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -510,7 +510,7 @@ class MaqEstados:
 			else:
 				self.current_state = self.piada_toc_toc
 
-			self.current_state[0].send(0)
+			# self.current_state[0].send(0)
 	
 	@prime
 	def _create_piada_toc_toc(self):
@@ -562,7 +562,7 @@ def main():
 	while True:
 		msg = input('Mensagem: ')
 
-		robo.send(msg)
+		#robo.send(msg)
 
 if (__name__ == '__main__'):
 	main()
