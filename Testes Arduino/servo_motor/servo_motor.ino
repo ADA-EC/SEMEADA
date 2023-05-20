@@ -21,7 +21,7 @@ void setup() {
     servos[i].write(0);  
   }
 }
-
+  
 void loop() {
   //Código para comunicação com python
   while(!Serial.available());

@@ -7,7 +7,7 @@ class commSerial:
 
 # Braço_Esquerdo - Braco_Direito - Tronco - Pescoço_Horizontal - Pescoço_Vertical - Olho_Esquerdo  - Olho_Direito
 
-	def __init__(self):
+	def __init__(self, serial_port = "COM3"):
 		self.bravo = [0, 0, 0, 45, 0, olho.bravo, olho.bravo]
 		self.triste = [0, 0, 0, 0, 20, olho.triste, olho.triste]
 		self.dormindo = [0, 0, 0, 0, 30, olho.dormindo, olho.dormindo]
@@ -24,13 +24,18 @@ class commSerial:
 		self.piada = [0, 0, 0, 0, 0, olho.feliz, olho.feliz]
 		self.levantar_bracos = [180, 45, 45, 180, 90, olho.noChange, olho.noChange]
 
-		while True: #Loop para a conexão com o Arduino
+		MAX_TRIES = 2
+		num_tries = 0
+		while num_tries < MAX_TRIES: #Loop para a conexão com o Arduino
 			try:  #Tenta se conectar, se conseguir, o loop se encerra
-				self.arduino = serial.Serial('COM3', 9600, dsrdtr = None, timeout=4)
+				self.arduino = serial.Serial(serial_port, 9600, dsrdtr = None, timeout=4)
 				print('Arduino conectado')
 				break
 			except:
-				pass
+				num_tries += 1
+		
+		if(num_tries == MAX_TRIES):
+			raise Exception(f"\nFailed to connect to Arduino.\nPORT: {serial_port}\n")
 		time.sleep(5)
 
 	def mudancaEstado (self, currState, prevState):
