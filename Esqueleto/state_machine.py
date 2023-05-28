@@ -40,12 +40,12 @@ class MaqEstados:
 		self.Stopped = False
 
 		# open jokes file
-		self.arquivo_pergunta_e_resposta = pd.read_csv("PIADA_Pergunta_e_Resposta.tsv", sep="	")
-		self.arquivo_sem_transicao = pd.read_csv("PIADA_Sem_transição.tsv", sep="	")
-		self.arquivo_toc_toc = pd.read_csv("PIADA_Toc_toc.tsv", sep="	")
+		self.arquivo_pergunta_e_resposta = pd.read_csv("Esqueleto/PIADA_Pergunta_e_Resposta.tsv", sep="	")
+		self.arquivo_sem_transicao = pd.read_csv("Esqueleto/PIADA_Sem_transição.tsv", sep="	")
+		self.arquivo_toc_toc = pd.read_csv("Esqueleto/PIADA_Toc_toc.tsv", sep="	")
 
 		#Create serial communication
-		self.arduino = commSerial.commSerial()
+		self.arduino = commSerial.commSerial(serial_port="COM3")
 
 	def send(self, msg):
 		"""The function sends the current input to the current state

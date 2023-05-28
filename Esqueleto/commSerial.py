@@ -89,7 +89,7 @@ class commSerial:
 		for pos in range(5, 7):
 			msg.extend(lista[pos].to_bytes(2, byteorder='little'))
 
-		msg.extend((1).to_bytes(2, byteorder='little'))
+		# msg.extend((1).to_bytes(2, byteorder='little'))
 
 		return msg
 
@@ -98,11 +98,13 @@ class commSerial:
 		print(msg)
 		self.arduino.write(msg)
 		print("Mensagem lida:")
-		txt=self.arduino.read(size=26)
+		txt=self.arduino.read(size=24)
 		if(txt != b''):
 			print(txt)
 			for i in range(5):
 				print(int.from_bytes(txt[2*(2*i):2*((2*i)+1)], 'little'), end=" - ")
+			print(int.from_bytes(txt[20:21], 'little'), end=" - ")
+			print(int.from_bytes(txt[22:23], 'little'))
 		else:
 			print("NONE")
 
