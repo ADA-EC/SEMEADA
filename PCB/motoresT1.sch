@@ -3501,18 +3501,6 @@ http://arduino.cc/en/Main/ArduinoBoardMega</description>
 <pinref part="X_3" gate="G$1" pin="0"/>
 <wire x1="-53.34" y1="10.16" x2="-53.34" y2="12.7" width="0.1524" layer="91"/>
 <label x="-53.34" y="10.16" size="1.778" layer="95"/>
-<pinref part="MEGA" gate="G$1" pin="GND@2"/>
-<wire x1="-53.34" y1="12.7" x2="-48.26" y2="12.7" width="0.1524" layer="91"/>
-<junction x="-53.34" y="12.7"/>
-<pinref part="MEGA" gate="G$1" pin="GND@3"/>
-<wire x1="-48.26" y1="12.7" x2="-43.18" y2="12.7" width="0.1524" layer="91"/>
-<junction x="-48.26" y="12.7"/>
-<pinref part="MEGA" gate="G$1" pin="GND@4"/>
-<wire x1="-43.18" y1="12.7" x2="-38.1" y2="12.7" width="0.1524" layer="91"/>
-<junction x="-43.18" y="12.7"/>
-<pinref part="MEGA" gate="G$1" pin="GND@5"/>
-<wire x1="-38.1" y1="12.7" x2="-33.02" y2="12.7" width="0.1524" layer="91"/>
-<junction x="-38.1" y="12.7"/>
 </segment>
 <segment>
 <pinref part="BESQ" gate="A" pin="3"/>
