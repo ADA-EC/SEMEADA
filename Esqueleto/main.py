@@ -15,7 +15,7 @@ def main():
 	stop_words = STOP_WORDS
 	nlp = spacy.load("Esqueleto/model-last")
 
-	robo = state_machine.MaqEstados()
+	robo = state_machine.MaqEstados(serial_port="COM9")
 	print("criado")
 
 	if(comando.elogio == 1):

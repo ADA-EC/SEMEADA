@@ -2,11 +2,11 @@
 
 Servo servos[5];  // create servo object to control a servo
 
-int16_t msg[13];        //variavel que recebe todas as infos do python
+int16_t msg[12];        //variavel que recebe todas as infos do python
 int16_t pos_at[7];      //variavel que guarda a posicao atual dos membros do robô
 int16_t incremento[5]; //variavel que guarda o quanto os servos têm que se movimentar
 int i, j, pos;
-byte buff[26];
+byte buff[24];
 
 void setup() {
   Serial.begin(9600);
@@ -14,7 +14,7 @@ void setup() {
     servos[i].attach(5+i);  
   }
 
-  memset(msg,0,13*sizeof(int16_t)); //set msg to 0
+  memset(msg,0,12*sizeof(int16_t)); //set msg to 0
   memset(pos_at,0,7*sizeof(int16_t)); //set msg to 0
 
   for(i = 0; i < 5; i ++){
@@ -25,9 +25,9 @@ void setup() {
 void loop() {
   //Código para comunicação com python
   while(!Serial.available());
-  Serial.readBytes(buff, 26);
+  Serial.readBytes(buff, 24);
 
-  for(i = 0; i < 13; i++){
+  for(i = 0; i < 12; i++){
     msg[i] = buff[2*i] + (buff[(2*i)+1] << 8);
   }
 
@@ -36,7 +36,7 @@ void loop() {
   }
 
   delay(100);
-  Serial.write(buff, 26);
+  Serial.write(buff, 24);
   delay(1000);
   
 

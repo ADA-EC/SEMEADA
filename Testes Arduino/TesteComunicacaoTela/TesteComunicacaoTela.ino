@@ -38,7 +38,7 @@ void setup() {
 		Serial.print(F("cannot start SD"));
 		while (1);
 	}
-	// uint8_t ret = showBMP("parrot.bmp", 0, 0);
+	showBMP("parrot.bmp", 0, 0);
 
 	memset(msg,0,12*sizeof(int16_t)); //set msg to 0
 	memset(pos_at,0,7*sizeof(int16_t)); //set msg to 0
@@ -65,14 +65,17 @@ void loop() {
       showBMP("feliz.bmp", 0, 0);
       break;
     case 2: //Triste
-      showBMP("triste_esq.bmp", 0, 0);
+      showBMP("triste.bmp", 0, 0);
       break;
     case 3: //Bravo
-      showBMP("bravo_esq.bmp", 0, 0);
+      showBMP("raiva.bmp", 0, 0);
       break;
     case 4: //Dormindo
       showBMP("pisca.bmp", 0, 0);
       break;
+    // default:
+    //   showBMP("parrot.bmp", 0, 0);
+    //   break;
   }
 
 	// for(i = 0; i < 5; i ++){
@@ -81,5 +84,8 @@ void loop() {
 
 	delay(100);
 	Serial.write(buff, 24); //Envia os dados da mensagem recebida
-	delay(1000);
+	delay(500);
+  // showBMP("parrot.bmp", 0, 0);
+  // delay(500);
+  // tft.fillScreen(0x0000);
 }

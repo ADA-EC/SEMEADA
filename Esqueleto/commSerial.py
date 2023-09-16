@@ -7,7 +7,7 @@ class commSerial:
 
 # Braço_Esquerdo - Braco_Direito - Tronco - Pescoço_Horizontal - Pescoço_Vertical - Olho_Esquerdo  - Olho_Direito
 
-	def __init__(self, serial_port = "COM3"):
+	def __init__(self, serial_port):
 		self.bravo = [0, 0, 0, 45, 0, olho.bravo, olho.bravo]
 		self.triste = [0, 0, 0, 0, 20, olho.triste, olho.triste]
 		self.dormindo = [0, 0, 0, 0, 30, olho.dormindo, olho.dormindo]
@@ -89,24 +89,26 @@ class commSerial:
 		for pos in range(5, 7):
 			msg.extend(lista[pos].to_bytes(2, byteorder='little'))
 
-		# msg.extend((1).to_bytes(2, byteorder='little'))
-
 		return msg
 
 
 	def sendMsg(self, msg):
-		print(msg)
+		# print(msg)
+		for i in range(5):
+			print(int.from_bytes(msg[2*(2*i):2*((2*i)+1)], 'little'), end=" - ")
+		print(int.from_bytes(msg[20:21], 'little'), end=" - ")
+		print(int.from_bytes(msg[22:23], 'little'))
 		self.arduino.write(msg)
-		print("Mensagem lida:")
-		txt=self.arduino.read(size=24)
-		if(txt != b''):
-			print(txt)
-			for i in range(5):
-				print(int.from_bytes(txt[2*(2*i):2*((2*i)+1)], 'little'), end=" - ")
-			print(int.from_bytes(txt[20:21], 'little'), end=" - ")
-			print(int.from_bytes(txt[22:23], 'little'))
-		else:
-			print("NONE")
+		# print("Mensagem lida:")
+		# txt=self.arduino.read(size=24)
+		# if(txt != b''):
+		# 	print(txt)
+		# 	for i in range(5):
+		# 		print(int.from_bytes(txt[2*(2*i):2*((2*i)+1)], 'little'), end=" - ")
+		# 	print(int.from_bytes(txt[20:21], 'little'), end=" - ")
+		# 	print(int.from_bytes(txt[22:23], 'little'))
+		# else:
+		# 	print("NONE")
 
 
 		

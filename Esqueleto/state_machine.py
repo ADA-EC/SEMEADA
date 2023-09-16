@@ -11,7 +11,7 @@ def prime(fn):
 	return wrapper
 
 class MaqEstados:
-	def __init__(self):
+	def __init__(self, serial_port):
 		# initializing states
 		self.neutro = (self._create_neutro(), "Neutro")
 		self.bravo = (self._create_bravo(), "Bravo")
@@ -45,7 +45,7 @@ class MaqEstados:
 		self.arquivo_toc_toc = pd.read_csv("Esqueleto/PIADA_Toc_toc.tsv", sep="	")
 
 		#Create serial communication
-		self.arduino = commSerial.commSerial(serial_port="COM3")
+		self.arduino = commSerial.commSerial(serial_port=serial_port)
 
 	def send(self, msg):
 		"""The function sends the current input to the current state

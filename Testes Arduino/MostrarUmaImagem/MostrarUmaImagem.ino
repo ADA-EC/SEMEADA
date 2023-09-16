@@ -31,7 +31,7 @@ void setup(){
         Serial.print(F("cannot start SD"));
         while (1);
     }
-    uint8_t ret = showBMP("parrot.bmp", 0, 0);
+    uint8_t ret = showBMP("pisca.bmp", 0, 0);
 }
 
 void loop(){
