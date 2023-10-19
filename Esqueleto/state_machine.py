@@ -298,8 +298,8 @@ class MaqEstados:
 					self.current_state = self.feliz
 					print("Oba")
 					print("-> Feliz\n")
-					
-			self.previous_state = self.handsup
+			
+				self.previous_state = self.handsup
 
 	@prime
 	def _create_falar_nome(self):
@@ -454,7 +454,7 @@ class MaqEstados:
 				print("Ok!")
 				self.current_state = self.previous_state
 				print("->", self.previous_state[1],"\n")
-			self.previous_state = self.falar_ADA
+				self.previous_state = self.falar_ADA
 	
 	@prime
 	def _create_falar_SEMEAR(self):
@@ -465,7 +465,7 @@ class MaqEstados:
 				print("Ok!")
 				self.current_state = self.previous_state
 				print("->", self.previous_state[1],"\n")
-			self.previous_state = self.falar_SEMEAR
+				self.previous_state = self.falar_SEMEAR
 
 	@prime
 	def _create_piada_simples(self):
@@ -546,7 +546,7 @@ class MaqEstados:
 					print("Eu amo essa música!!\n")
 					print("-> Feliz\n")
 					
-			self.previous_state = self.tocar_musica
+				self.previous_state = self.tocar_musica
 		
 
 
