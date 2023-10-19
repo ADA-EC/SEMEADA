@@ -43,6 +43,7 @@ class commSerial:
 			Obs: Não conseguimos pensar em uma maneira menor de fazer isso :(
 		'''
 		print("Estado atual: ", currState)
+		msg = None
 
 
 		if currState=="Bravo":
@@ -77,7 +78,10 @@ class commSerial:
 		elif currState=="Piada":
 			msg=self.createMsg(self.piada)
 
-		self.sendMsg(msg)
+		if(msg != None):
+			self.sendMsg(msg)
+		else:
+			print("WARN: Nenhum comando de braço programado/enviado")
 
 	def createMsg (self, lista):
 		msg=bytearray()
