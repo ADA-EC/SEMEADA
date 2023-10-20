@@ -27,6 +27,7 @@ Quando o robô é inicializado, o mesmo fica em estado de espera, aguardando o a
 
 ## Executando o projeto
 ### Treinando o modelo
+Para treinar o modelo utilizar as instruções contidas [nesse guia](https://github.com/ADA-EC/SEMEADA/tree/main/Treinamento_PLN)
 
 ### Rodando o código
 Para rodar o projeto, executar o comando: <br>
