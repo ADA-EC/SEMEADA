@@ -1,7 +1,7 @@
 import spacy
 import string
 from spacy.lang.pt.stop_words import STOP_WORDS
-from comandos import comando
+from utils import comando
 
 
 def preprocessamento(texto, stop_words, tokenizer):
