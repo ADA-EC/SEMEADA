@@ -1,4 +1,4 @@
-from comandos import comando
+from utils import comando, SOLETRAR_DICT
 import pandas as pd
 import commSerial
 import random
@@ -25,9 +25,6 @@ class MaqEstados:
 		self.soletrando = (self._create_soletrando(), "Soletrando")
 		self.falar_ADA = (self._create_falar_ADA(),"Falar_sobre_ADA")
 		self.falar_SEMEAR = (self._create_falar_SEMEAR(),"Falar_sobre_SEMEAR")
-		self.piada_simples = (self._create_piada_simples(), "Piada sem transição")
-		self.piada_pergunta_e_resposta = (self._create_piada_pergunta_e_resposta(), "Piada pergunta e resposta")
-		self.piada_toc_toc = (self._create_piada_toc_toc(), "Piada toc toc")
 		self.piada = (self._create_piada(), "Piada")
 		self.tocar_musica = (self._create_tocar_musica(), "Tocar musica")
 		
@@ -84,6 +81,8 @@ class MaqEstados:
 			# Wait till the input is received.
 			# once received store the input in `msg`
 			msg = yield
+			# Convert msg to command
+			msg = comando(msg)
 
 			# depending on what we received as the input
 			# change the current state of the fsm
@@ -96,7 +95,7 @@ class MaqEstados:
 					self.current_state = self.triste
 					print("ok então ;-;")
 					print("-> Triste\n")
-			elif msg == comando.elogio:
+			elif msg == comando.ELOGIO:
 				print(':D')
 				print("-> Feliz\n")
 				self.current_state = self.feliz
@@ -129,7 +128,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				# self.current_state[0].send(0)
+				self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -146,6 +145,7 @@ class MaqEstados:
 	def _create_bravo(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Desculpa:
 				print("ok...")
@@ -176,7 +176,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				# self.current_state[0].send(0)
+				self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -188,8 +188,9 @@ class MaqEstados:
 	def _create_triste(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
-			if msg == comando.elogio:
+			if msg == comando.ELOGIO:
 				print("ok...")
 				print("-> Neutro\n")
 				self.current_state = self.neutro
@@ -218,7 +219,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				# self.current_state[0].send(0)
+				self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -230,6 +231,7 @@ class MaqEstados:
 	def _create_feliz(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Dancar:
 				print('┏(･o･)┛♪┗ (･o･) ┓')
@@ -264,7 +266,7 @@ class MaqEstados:
 				self.current_state = self.falar_SEMEAR
 			elif msg == comando.Piada:
 				self.current_state = self.piada
-				# self.current_state[0].send(0)
+				self.current_state[0].send(0)
 			elif msg == comando.Musica:
 				print("-> Escolhendo musica para tocar\n")
 				#Parte do código para escolher a musica que irar tocar
@@ -276,6 +278,8 @@ class MaqEstados:
 	def _create_dançando(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
+
 			if msg == comando.Stop:
 				print('Ok!')
 				print("-> Feliz\n")
@@ -287,9 +291,9 @@ class MaqEstados:
 	def _create_handsup(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Stop:
-
 				print('Ok!')
 				if(random.randint(1,10) < 8):
 					self.current_state = self.previous_state
@@ -305,6 +309,8 @@ class MaqEstados:
 	def _create_falar_nome(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
+
 			if msg == comando.Stop:
 				print("Ok!")
 				self.current_state = self.previous_state
@@ -315,6 +321,8 @@ class MaqEstados:
 	def _create_falar_projeto(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
+
 			if msg == comando.Stop:
 				print("Ok!")
 				self.current_state = self.previous_state
@@ -325,6 +333,7 @@ class MaqEstados:
 	def _create_dormindo(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Acordar:
 				print("afs afs")
@@ -340,106 +349,11 @@ class MaqEstados:
 	def _create_soletrando(self):
 		while True:
 			msg = yield
-			soletrar = msg + ","
+
+			soletrar = msg
 			for letter in msg:
-				if letter == "a":
-					soletrar = soletrar + ("A, ")
-				if letter == "b":
-					soletrar = soletrar + ("Bê, ")
-				if letter == "c":
-					soletrar = soletrar + ("Cê, ")
-				if letter == "d":
-					soletrar = soletrar + ("Dê, ")
-				if letter == "e":
-					soletrar = soletrar + ("Ê, ")
-				if letter == "f":
-					soletrar = soletrar + ("É fi, ")
-				if letter == "g":
-					soletrar = soletrar + ("Gê, ")
-				if letter == "h":
-					soletrar = soletrar + ("A gá, ")
-				if letter == "i":
-					soletrar = soletrar + ("I, ")
-				if letter == "j":
-					soletrar = soletrar + ("Jota, ")
-				if letter == "k":
-					soletrar = soletrar + ("Ká, ")
-				if letter == "l":
-					soletrar = soletrar + ("É li, ")
-				if letter == "m":
-					soletrar = soletrar + ("Ê mi, ")
-				if letter == "n":
-					soletrar = soletrar + ("Ê ni, ")
-				if letter == "o":
-					soletrar = soletrar + ("Ô, ")
-				if letter == "p":
-					soletrar = soletrar + ("Pê, ")
-				if letter == "q":
-					soletrar = soletrar + ("Quê, ")
-				if letter == "r":
-					soletrar = soletrar + ("É ri, ")
-				if letter == "s":
-					soletrar = soletrar + ("É si, ")
-				if letter == "t":
-					soletrar = soletrar + ("Tê, ")
-				if letter == "u":
-					soletrar = soletrar + ("Ú, ")
-				if letter == "v":
-					soletrar = soletrar + ("Vê, ")
-				if letter == "w":
-					soletrar = soletrar + ("Dábliu, ")
-				if letter == "x":
-					soletrar = soletrar + ("Xis, ")
-				if letter == "y":
-					soletrar = soletrar + ("Ípsilom, ")
-				if letter == "z":
-					soletrar = soletrar + ("Zê, ")
-				if letter == "ç":
-					soletrar = soletrar + ("Cê cedilha, ")
-				if letter == "á":
-					soletrar = soletrar + ("A com acento agudo, ")
-				if letter == "ã":
-					soletrar = soletrar + ("A com til, ")
-				if letter == "â":
-					soletrar = soletrar + ("A com acento circunflexo, ")
-				if letter == "à":
-					soletrar = soletrar + ("A com crase, ")
-				if letter == "ó":
-					soletrar = soletrar + ("Ô com acento agudo, ")
-				if letter == "õ":
-					soletrar = soletrar + ("Ô com til, ")
-				if letter == "ô":
-					soletrar = soletrar + ("Ô com acento circunflexo, ")
-				if letter == "é":
-					soletrar = soletrar + ("Ê com acento agudo, ")
-				if letter == "ê":
-					soletrar = soletrar + ("Ê com acento circunflexo, ")
-				if letter == "ú":
-					soletrar = soletrar + ("Ê com acento agudo, ")
-				if letter == "ü":
-					soletrar = soletrar + ("Ú com trema, ")
-				if letter == "í":
-					soletrar = soletrar + ("I com acento agudo, ")
-				if letter == "0":
-					soletrar = soletrar + ("Zero, ")
-				if letter == "1":
-					soletrar = soletrar + ("Um, ")
-				if letter == "2":
-					soletrar = soletrar + ("Dois, ")
-				if letter == "3":
-					soletrar = soletrar + ("Três, ")
-				if letter == "4":
-					soletrar = soletrar + ("Quatro, ")
-				if letter == "5":
-					soletrar = soletrar + ("Cinco, ")
-				if letter == "6":
-					soletrar = soletrar + ("Seis, ")
-				if letter == "7":
-					soletrar = soletrar + ("Sete, ")
-				if letter == "8":
-					soletrar = soletrar + ("Oito, ")
-				if letter == "9":
-					soletrar = soletrar + ("Nove, ")
+				soletrar += ", "
+				soletrar += SOLETRAR_DICT[letter]
 
 			print("A palavra se soletra assim: ",soletrar, "\n->",self.previous_state[1])
 			self.current_state = self.previous_state
@@ -449,6 +363,7 @@ class MaqEstados:
 	def _create_falar_ADA(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Stop:
 				print("Ok!")
@@ -460,6 +375,7 @@ class MaqEstados:
 	def _create_falar_SEMEAR(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Stop:
 				print("Ok!")
@@ -468,71 +384,10 @@ class MaqEstados:
 				self.previous_state = self.falar_SEMEAR
 
 	@prime
-	def _create_piada_simples(self):
-		while True:
-			msg = yield
-			print(self.arquivo_sem_transicao.shape)
-			n = self.arquivo_sem_transicao.shape[0]
-			piada = random.randint(0,n-1)
-			print(self.arquivo_sem_transicao.iloc[piada][0])
-			self.current_state = self.feliz
-			
-	@prime
-	def _create_piada_pergunta_e_resposta(self):
-		while True:
-			msg = yield
-			print(self.arquivo_pergunta_e_resposta.shape)
-			n = self.arquivo_pergunta_e_resposta.shape[0]
-			piada = random.randint(0,n-1)
-			print(self.arquivo_pergunta_e_resposta.iloc[piada][0])
-
-			msg = yield
-			if (msg == 2):
-				print(self.arquivo_pergunta_e_resposta.iloc[piada][1])
-				self.current_state = self.feliz
-			elif (msg == 5):
-				#tentar fazer em PLN
-				self.current_state = self.feliz
-			elif (msg == 7):
-				self.current_state = self.bravo
-			
-	@prime
-	def _create_piada(self):
-		while True:
-			msg = yield
-			n = random.randint(1,3)
-			print(n)
-
-			if(n == 1):
-				self.current_state = self.piada_pergunta_e_resposta
-			elif(n == 2):
-				self.current_state = self.piada_simples
-			else:
-				self.current_state = self.piada_toc_toc
-
-			# self.current_state[0].send(0)
-	
-	@prime
-	def _create_piada_toc_toc(self):
-		while True:
-			msg = yield
-
-			n = self.arquivo_toc_toc.shape[0]
-			piada = random.randint(0,n-1)
-			print(self.arquivo_toc_toc.iloc[piada][0])
-			msg = yield
-			if (msg == 1):
-				print(self.arquivo_toc_toc.iloc[piada][2])
-				msg = yield
-				print(self.arquivo_toc_toc.iloc[piada][4])
-				self.current_state = self.feliz
-			elif (msg == 2):
-				self.current_state = self.bravo
-
-	@prime
 	def _create_tocar_musica(self):
 		while True:
 			msg = yield
+			msg = comando(msg)
 
 			if msg == comando.Stop:
 				print('Ok!')
@@ -547,16 +402,71 @@ class MaqEstados:
 					print("-> Feliz\n")
 					
 				self.previous_state = self.tocar_musica
-		
 
+	@prime
+	def _create_piada(self):
+		while True:
+			msg = yield
+			msg = comando(msg)
 
+			n = random.randint(1,3)
+			if(n == 1):
+				print("PIADA SIMPLES")
+				self._piada_simples()
+			elif(n == 2):
+				print("PIADA PERGUNTA E RESPOSTA")
+				self._piada_pergunta_e_resposta()
+			else:
+				print("PIADA TOC TOC")
+				self._piada_toc_toc()
+	
+	def _piada_simples(self):
+		n = self.arquivo_sem_transicao.shape[0]
+		piada = random.randint(0,n-1)
+		print(self.arquivo_sem_transicao.iloc[piada][0])
+		self.current_state = self.feliz
 			
+	def _piada_pergunta_e_resposta(self):
+		n = self.arquivo_pergunta_e_resposta.shape[0]
+		piada = random.randint(0,n-1)
+		print(self.arquivo_pergunta_e_resposta.iloc[piada][0])
+
+		msg = input()
+		if (msg == "1"):
+			print(self.arquivo_pergunta_e_resposta.iloc[piada][1])
+			self.current_state = self.feliz
+		elif (msg == "2"):
+			#tentar fazer em PLN
+			self.current_state = self.feliz
+		else:
+			self.current_state = self.bravo
+
+	def _piada_toc_toc(self):
+		n = self.arquivo_toc_toc.shape[0]
+		piada = random.randint(0,n-1)
+		print(self.arquivo_toc_toc.iloc[piada][0])
+		msg = input()
+
+		if (msg == "1"):
+			print(self.arquivo_toc_toc.iloc[piada][2])
+			msg = input()
+
+			if(msg == "1"):
+				print(self.arquivo_toc_toc.iloc[piada][4])
+				self.current_state = self.feliz
+			else:
+				print(">:/")
+				self.current_state = self.bravo
+		else:
+			print(">:/")
+			self.current_state = self.bravo
+
 
 def main():
 	robo = MaqEstados()
 	print("criado")
 
-	if(comando.elogio == 1):
+	if(comando.ELOGIO == 1):
 		print("oe")
 
 	while True:
