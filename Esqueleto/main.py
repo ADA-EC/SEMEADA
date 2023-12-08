@@ -1,4 +1,4 @@
-from comandos import comando
+from utils import comando
 import processamento_voz
 import state_machine
 import sintese_voz
@@ -18,8 +18,13 @@ def main():
 	robo = state_machine.MaqEstados(serial_port="COM9")
 	print("criado")
 
-	if(comando.elogio == 1):
+	if(comando.ELOGIO == comando(1)):
 		print("oe")
+	else:
+		print(20*'#')
+		print(comando.ELOGIO)
+		print(1)
+		print(20*'#')
 
 	while True:
 		msg = input('Mensagem: ')
